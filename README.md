@@ -34,10 +34,7 @@ The project relies on the following dependencies:
 
 ## Installation
 
-1. Clone the repository to your local machine:
-
-git clone https://github.com/your-username/sms.git
-
+1. Clone the repository to your local machine
 
 2. Install the required dependencies:
 
