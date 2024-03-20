@@ -39,7 +39,7 @@ def add_new_student(courses=None):
 
          mobile_number = None
          while mobile_number is None:
-            mobile_number_input = input("Enter mobile number: ")
+            mobile_number_input = input("Enter mobile number(should start from 6,7,8 or 9): ")
             try:
                mobile_number = validate_mobile_number(mobile_number_input)
             except ValueError as e:
@@ -47,17 +47,17 @@ def add_new_student(courses=None):
 
          gender = None
          while gender is None:
-            gender_input = input("Enter gender: ")
+            gender_input = input("Enter gender(male/female/others): ")
             try:
                gender = validate_gender(gender_input)
             except ValueError as e:
                print("Error:", e)
 
-         school_details = input("Enter school details: ")
+         school_details = input("Enter school name: ")
 
          current_course = None
          while current_course is None:
-            course_input = input("Enter current course: ")
+            course_input = input("Enter current course (Courses:Zoology, Maths, Biology, Physics, Chemistry): ")
             if course_input in courses:
                current_course = course_input
             else:
@@ -93,18 +93,18 @@ def update_student_information(db_cursor, db_connection):
          new_address = input("Enter new address: ")
 
          while True:
-            new_mobile_number = input("Enter new mobile number: ")
+            new_mobile_number = input("Enter new mobile number(should start from 6,7,8 or 9): ")
             try:
                new_mobile_number = validate_mobile_number(new_mobile_number)
                break
             except ValueError as e:
                print("Error:", e)
 
-         new_school_details = input("Enter new school details: ")
+         new_school_details = input("Enter new school name: ")
 
          new_course = None
          while new_course is None:
-            course_input = input("Enter new course: ")
+            course_input = input("Enter new course (Courses:Zoology, Maths, Biology, Physics, Chemistry): ")
             if course_input in courses:
                new_course = course_input
             else:
@@ -182,11 +182,11 @@ def list_students_by_criteria(course=None, year=None, gender=None):
    while True:
       try:
          if course is None:
-            course = input("Enter course (optional, leave blank to ignore): ")
+            course = input("Enter course (optional, leave blank to ignore)/(Courses:Zoology, Maths, Biology, Physics, Chemistry): ")
          if year is None:
             year = input("Enter year (optional, leave blank to ignore): ")
          if gender is None:
-            gender = input("Enter gender (optional, leave blank to ignore): ")
+            gender = input("Enter gender (optional, leave blank to ignore)/(male,female,others): ")
 
          sql = "SELECT * FROM students WHERE 1=1 and is_deleted=0"  # Always true to avoid syntax issues
          conditions = []
@@ -239,7 +239,7 @@ def update_student_current_course():
             student_id = input("Enter student ID: ")
             student_id = validate_student_id(student_id)
 
-            new_course = input("Enter new course: ")
+            new_course = input("Enter new course (Courses:Zoology, Maths, Biology, Physics, Chemistry): ")
             new_course = validate_course(new_course, allowed_courses=['Zoology', 'Chemistry', 'Maths', 'Biology','Physics',])  # Adjust allowed courses as needed
 
             # Get the current course of the student
@@ -340,7 +340,7 @@ def add_new_teacher():
 
          while True:
             try:
-               mobile_number = input("Enter mobile number: ")
+               mobile_number = input("Enter mobile number(should start from 6,7,8 or 9): ")
                # Validate mobile number
                mobile_number = validate_mobile_number(mobile_number)
                break  # Move to the next input field if mobile number is valid
@@ -350,7 +350,7 @@ def add_new_teacher():
 
          while True:
             try:
-               gender = input("Enter gender: ")
+               gender = input("Enter gender(male/female/others): ")
                # Validate gender
                gender = validate_gender(gender)
                break  # Move to the next input field if gender is valid
@@ -407,14 +407,14 @@ def update_teacher_information():
         new_address = input("Enter new address: ")
 
         while True:
-            new_mobile_number = input("Enter new mobile number: ")
+            new_mobile_number = input("Enter new mobile number(should start from 6,7,8 or 9): ")
             try:
                 new_mobile_number = validate_mobile_number(new_mobile_number)
                 break
             except ValueError as e:
                 print("Invalid mobile number:", e)
 
-        new_course = input("Enter new course: ")
+        new_course = input("Enter new course (Courses:Zoology, Maths, Biology, Physics, Chemistry): ")
 
         # Fetch the current values
         sql_fetch_current_values = "SELECT address, mobile_number, course_can_teach1, course_can_teach2, past_course FROM teachers WHERE id = %s and is_deleted=0"
@@ -464,9 +464,9 @@ def list_teachers_by_criteria(course=None, gender=None):
    while True:
       try:
          if course is None:
-            course = input("Enter course (optional, leave blank to ignore): ")
+            course = input("Enter course (optional,leave blank to ignore)/(Courses:Zoology, Maths, Biology, Physics, Chemistry): ")
          if gender is None:
-            gender = input("Enter gender (optional, leave blank to ignore): ")
+            gender = input("Enter gender (optional, leave blank to ignore)/(male,female,others): ")
 
          sql = "SELECT * FROM teachers WHERE 1=1 and is_deleted=0"  # Always true to avoid syntax issues
          conditions = []
@@ -495,7 +495,7 @@ def view_teacher_past_courses(teacher_id):
    while True:
       try:
          teacher_id = validate_teacher_id(teacher_id)
-         sql = "SELECT past_course FROM teachers WHERE id=%s"
+         sql = "SELECT past_course FROM teachers WHERE id=%s and is_deleted=0"
          db_cursor.execute(sql, (teacher_id,))
          past_courses = db_cursor.fetchone()
          if past_courses:
@@ -573,7 +573,7 @@ def export_table_to_csv(table_name, file_name):
   except Exception as e:
       print("Error:", e)
 
-
+#for student data
 def add_data_from_csv():
     try:
         file_path = input("Enter the path to the CSV file: ")
@@ -597,7 +597,7 @@ def add_data_from_csv():
 
 
 
-
+#for teachers data
 def add_teachers_from_csv(file_path):
     try:
         with open(file_path, 'r') as csvfile:
