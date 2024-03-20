@@ -24,7 +24,7 @@ def display_student_menu():
     print("10. Search student by course")
     print("11. Export student data")
     print("12. Import student data")
-    print("12. Back to main menu")
+    print("13. Back to main menu")
 
 # Function to display teacher operations menu
 def display_teacher_menu():
