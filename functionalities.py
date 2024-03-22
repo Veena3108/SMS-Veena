@@ -33,9 +33,17 @@ def add_new_student(courses=None):
             except ValueError as e:
                print("Error:", e)
 
-         parent_details = input("Enter parent name: ")
+         parent_details = None
+         while not parent_details:
+            parent_details = input("Enter parent name: ").strip()
+            if not parent_details:
+               print("Parent name cannot be blank!")
 
-         address = input("Enter address: ")
+         address = None
+         while not address:
+            address = input("Enter address: ").strip()
+            if not address:
+               print("Address cannot be blank!")
 
          mobile_number = None
          while mobile_number is None:
@@ -53,17 +61,27 @@ def add_new_student(courses=None):
             except ValueError as e:
                print("Error:", e)
 
-         school_details = input("Enter school name: ")
+         school_details = None
+         while not school_details:
+            school_details = input("Enter school name: ").strip()
+            if not school_details:
+               print("School name cannot be blank!")
 
          current_course = None
          while current_course is None:
-            course_input = input("Enter current course (Courses:Zoology, Maths, Biology, Physics, Chemistry): ")
+            course_input = input("Enter current course (Courses: Zoology, Maths, Biology, Physics, Chemistry): ")
             if course_input in courses:
                current_course = course_input
             else:
                print("Invalid course! Please select from the available courses.")
 
-         year = input("Enter year: ")
+         year = None
+         while year is None:
+            year_input = input("Enter year: ")
+            try:
+               year = validate_year(year_input)
+            except ValueError as e:
+               print("Error:", e)
 
          # Inserting the new student into the database
          sql = "INSERT INTO students (name, age, parent_details, address, mobile_number, gender, school_details, current_course, year) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -336,7 +354,11 @@ def add_new_teacher():
          # Validate name
          name = validate_student_name(name)
 
-         address = input("Enter address: ")
+         address = None
+         while not address:
+            address = input("Enter address: ").strip()
+            if not address:
+               print("Address cannot be blank!")
 
          while True:
             try:
