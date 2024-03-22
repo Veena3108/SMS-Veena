@@ -1,10 +1,10 @@
 def validate_student_name(name):
     if not isinstance(name, str):
-        raise ValueError("Student name must be a string.")
+        raise ValueError("Name must be a string.")
     if not name.strip():  # Check if the name is empty or contains only whitespace
-        raise ValueError("Student name cannot be empty.")
+        raise ValueError("Name cannot be empty.")
     if not name.replace(" ", "").isalpha():  # Check if the name contains only alphabets and spaces
-        raise ValueError("Student name can only contain alphabets.")
+        raise ValueError("Name can only contain alphabets.")
     return name
 
 
@@ -54,3 +54,13 @@ def validate_course(course, allowed_courses):
     if course not in allowed_courses:
         raise ValueError(f"Invalid course! Allowed courses are: {', '.join(allowed_courses)}")
     return course
+
+
+def validate_year(year_str):
+    try:
+        year = int(year_str)
+        if year <= 0:
+            raise ValueError("Year must be a positive integer.")
+        return year
+    except ValueError:
+        raise ValueError("Invalid year! Please enter a valid integer year.")
